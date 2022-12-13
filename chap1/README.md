@@ -1,6 +1,7 @@
 # Source files
 - `light.s`
-	- Program to turn on LEDs.
+	- LEDを点灯させるプログラム．
 - `blink.s`
+	- LEDを10回点滅させるプログラム．
 - `switch.s`
 - `swled.s`
