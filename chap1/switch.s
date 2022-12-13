@@ -23,7 +23,7 @@ _start:
 	mov	r3,	#(1 << SW1_PORT)
 	@	10番ポートを出力にする設定
 	ldr	r1,		=GPFSEL_VEC1
-	str r1,		[r0,	#GPFSEL1]
+	str r1,		[r0,	#GPFSEL2]
 
 loop0:
 	
