@@ -31,8 +31,8 @@ loop0:
 	mov	r7,	#5
 	mov r9, r10
 
-	and r9, r10, r3
-	cmp r9, #0
+	and r11, r10, r3
+	cmp r11, #0
 	bne SW1
 
 	and r9, r10, r4
@@ -48,19 +48,19 @@ loop0:
 	bne SW4	
 	b OFF
 SW1:
-	and r9, r10, r4
-	cmp r9, #0
+	and r12, r10, r4
+	cmp r12, #0
 	bne SW1andSW2
 	b Notdouble
 SW1andSW2:
 	mov r1, #(1 << LED_PORT)
 	str r1, [r0, #GPSET0]
-	mov r2, #0xcc
+	mov r2, #0xc000
 1:	subs r2, r2, #1
 	bne 1b
 	mov r1, #(1 << 10)
 	str r1, [r0, #GPSET1]
-	mov r2, #0xcc
+	mov r2, #0xc000
 2:	subs r2, r2, #1
 	bne 2b
 
