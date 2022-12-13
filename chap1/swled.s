@@ -30,21 +30,21 @@ loop0:
 	ldr r10, [r0, #0x0034]
 	mov r9, r10
 
-	and r9, r9, r3
+	and r9, r10, r3
 	cmp r9, #0
-	beq SW1
-	mov r9, r10
-	and r9, r9, r4
+	bne SW1
+
+	and r9, r10, r4
 	cmp r9, #0
-	beq SW2
-	mov r9, r10
-	and r9, r9, r5
+	bne SW2
+
+	and r9, r10, r5
 	cmp r9, #0
-	beq SW3	
-	mov r9, r10
-	and r9, r9, r6
+	bne SW3	
+
+	and r9, r10, r6
 	cmp r9, #0
-	beq SW4	
+	bne SW4	
 	b OFF
 SW1:
 	mov r1, #(1 << LED_PORT)
