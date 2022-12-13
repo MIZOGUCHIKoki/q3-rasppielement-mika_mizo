@@ -56,7 +56,7 @@ SW1:
 	bne 1b
 
 	mov r1, #(1 << 10)
-	str r1, [r0, #GPSET0]
+	str r1, [r0, #GPSET1]
 	mov r2, #0x1f0000
 
 2:
@@ -65,6 +65,7 @@ SW1:
 
 	subs	r7, r7,	#1
 	bne	SW1
+
 	b	loop0
 SW2:
 	mov r1, #(1 << LED_PORT)
@@ -75,7 +76,7 @@ SW2:
 	bne 1b
 
 	mov r1, #(1 << 10)
-	str r1, [r0, #GPSET0]
+	str r1, [r0, #GPSET1]
 	mov r2, #0xc0000
 
 2:
@@ -94,7 +95,7 @@ SW3:
 	bne 1b
 
 	mov r1, #(1 << 10)
-	str r1, [r0, #GPSET0]
+	str r1, [r0, #GPSET1]
 	mov r2, #0xc0000
 
 2:
