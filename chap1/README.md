@@ -4,4 +4,15 @@
 - `blink.s`
 	- LEDを10回点滅させるプログラム．
 - `switch.s`
+	- Switch 1（13ポート）を押下した時のみ，LEDランプが点灯する．
 - `swled.s`
+	- Switch 1
+		- 点滅パターン1：`-- -- -- -- -- --` (long 5times)
+	- Switch 2
+		- 点滅パターン2：`. . . . .` (short 5times)
+	- Switch 3
+		- 点滅パターン3：`-- . -- . --` (long 3times and short 2times)
+	- Switch 4
+		- 押下した時のみ，LEDランプが点灯する．
+	- Switch 1 and Switch 2
+		- 点滅パターン5：`.....` (so short 5times)
