@@ -28,6 +28,7 @@ _start:
 	
 loop0:
 	ldr r10, [r0, #0x0034]
+	mov	r7,	#5
 	mov r9, r10
 
 	and r9, r10, r3
@@ -61,6 +62,9 @@ SW1:
 2:
 	subs r2, r2, #1
 	bne 2b
+
+	subs	r7, r7,	#1
+	bne	SW1
 	b	loop0
 SW2:
 	mov r1, #(1 << LED_PORT)
@@ -77,6 +81,9 @@ SW2:
 2:
 	subs r2, r2, #1
 	bne 2b
+
+	subs	r7, r7,	#1
+	bne	SW1
 	b	loop0
 SW3:
 	mov r1, #(1 << LED_PORT)
@@ -93,6 +100,8 @@ SW3:
 2:
 	subs r2, r2, #1
 	bne 2b
+	subs	r7, r7,	#1
+	bne	SW1
 	b	loop0
 
 SW4:
