@@ -26,7 +26,7 @@ loop0:
 1:	subs r2, r2, #1
 	bne 1b
 
-	mov r1, #(1 << 10)
+	mov r1, #(1 << LED_PORT)
 	str r1, [r0, #GPCLR0]
 	mov r2, #0x1f0000
 
