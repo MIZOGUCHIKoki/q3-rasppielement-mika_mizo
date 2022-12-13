@@ -84,7 +84,7 @@ SW2:
 	bne 2b
 
 	subs	r7, r7,	#1
-	bne	SW1
+	bne	SW2
 	b	loop0
 SW3:
 	mov r1, #(1 << LED_PORT)
@@ -102,7 +102,7 @@ SW3:
 	subs r2, r2, #1
 	bne 2b
 	subs	r7, r7,	#1
-	bne	SW1
+	bne	SW3
 	b	loop0
 
 SW4:
