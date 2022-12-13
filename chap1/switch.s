@@ -20,28 +20,27 @@
 _start:
 	ldr	r0,		=GPIO_BASE
 	
-	mov	r3,	#(1 << 13)
+	mov	r3,	#(1 << SW1_PORT)
 	@	10番ポートを出力にする設定
 	ldr	r1,		=GPFSEL_VEC1
 	str r1,		[r0,	#GPFSEL1]
 
-	mov	r11,	#1	@ SW1(13) :: ON
 loop0:
 	
 	@ input SW1(13)
-	ldr	r10,	[r0, 0x0034]	
+	ldr	r10,	[r0, #0x0034]	
 	and	r10,	r10,	r3			@ r10 = [r0, 0x0034] and (1 << 13)
-	lsr	r10,	r10,	#13
-	cmp	r10,	r11
-	beq	OFF
+	lsr	r10,	r10,	#SW1_PORT			@	13 right shift
+	cmp	r10,	#0
+	bne	ON
 
-	ON:
-		mov	r1,	#(1 << LED_PORT)
-		str	r1,	[r0,	#GPSET0]		@ r0 + 0x1c | 0..01000000000
-		b loop0:
 	OFF:
 		mov	r1,	#(1 << LED_PORT)
 		str	r1,	[r0,	#GPSET1]		@ r0 + 0x28 | 0..01000000000
+		b loop0
+	ON:
+		mov	r1,	#(1 << LED_PORT)
+		str	r1,	[r0,	#GPSET0]		@ r0 + 0x1c | 0..01000000000
 		b loop0
 	
 loop:	b loop		@ 故障防止
