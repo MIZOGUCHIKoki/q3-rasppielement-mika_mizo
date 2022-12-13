@@ -28,20 +28,20 @@ _start:
 	
 loop0:
 	ldr r10, [r0, #0x0034]
-	ldr r9, r10
+	mov r9, r10
 
 	and r9, r9, r3
 	cmp r9, #0
 	beq SW1
-	ldr r9, r10
+	mov r9, r10
 	and r9, r9, r4
 	cmp r9, #0
 	beq SW2
-	ldr r9, r10
+	mov r9, r10
 	and r9, r9, r5
 	cmp r9, #0
 	beq SW3	
-	ldr r9, r10
+	mov r9, r10
 	and r9, r9, r6
 	cmp r9, #0
 	beq SW4	
@@ -55,7 +55,7 @@ SW1:
 	bne 1b
 
 	mov r1, #(1 << 10)
-	str r1, [r0, #GPCLR0]
+	str r1, [r0, #GPSET0]
 	mov r2, #0x1f0000
 
 2:
@@ -71,7 +71,7 @@ SW2:
 	bne 1b
 
 	mov r1, #(1 << 10)
-	str r1, [r0, #GPCLR0]
+	str r1, [r0, #GPSET0]
 	mov r2, #0xc0000
 
 2:
@@ -87,7 +87,7 @@ SW3:
 	bne 1b
 
 	mov r1, #(1 << 10)
-	str r1, [r0, #GPCLR0]
+	str r1, [r0, #GPSET0]
 	mov r2, #0xc0000
 
 2:
