@@ -64,8 +64,8 @@ SW1andSW2:
 2:	subs r2, r2, #1
 	bne 2b
 
-	subs r7, r7, #1
-	bne SW1andSW2
+	@subs r7, r7, #1
+	@bne SW1andSW2
 	b loop0
 
 Notdouble:		
@@ -84,8 +84,8 @@ Notdouble:
 	subs r2, r2, #1
 	bne 2b
 
-	subs	r7, r7,	#1
-	bne	SW1
+	@subs	r7, r7,	#1
+	@bne	SW1
 
 	b	loop0
 SW2:
@@ -104,8 +104,8 @@ SW2:
 	subs r2, r2, #1
 	bne 2b
 
-	subs	r7, r7,	#1
-	bne	SW2
+	@subs	r7, r7,	#1
+	@bne	SW2
 	b	loop0
 SW3:
 	mov r1, #(1 << LED_PORT)
@@ -122,8 +122,8 @@ SW3:
 2:
 	subs r2, r2, #1
 	bne 2b
-	subs	r7, r7,	#1
-	bne	SW3
+	@subs	r7, r7,	#1
+	@bne	SW3
 	b	loop0
 
 SW4:
