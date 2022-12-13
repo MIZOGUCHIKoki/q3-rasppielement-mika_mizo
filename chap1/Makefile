@@ -18,6 +18,7 @@ OBJFLAGS = -O binary
 %: %.s
 
 
+
 .PHONY: clean mizo mika yama tana
 
 mizo: file

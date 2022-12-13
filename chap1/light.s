@@ -11,7 +11,8 @@
 	.section .init
 	.global _start
 _start:
-	ldr     r0, =GPIO_BASE     	
+	ldr     r0, =GPIO_BASE
+  	
 	ldr     r1, =GPFSEL_VEC1
 	str     r1, [r0, #GPFSEL1]
 
