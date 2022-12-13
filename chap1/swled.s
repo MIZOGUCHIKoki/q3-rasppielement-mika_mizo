@@ -26,24 +26,81 @@ _start:
 	mov r6, #(1 << 6)
 	
 	
-
-	
 loop0:
 	ldr r10, [r0, #0x0034]
 	ldr r9, r10
 
 	and r9, r9, r3
 	cmp r9, #0
-	beq ON
-	
-        ldr r9, r10
+	beq SW1
+	ldr r9, r10
 	and r9, r9, r4
 	cmp r9, #0
-	beq ON	
-ON:
-	mov	r1,	#(1 << LED_PORT)
-	str	r1,	[r0,	#GPSET0]		
-	b loop0
+	beq SW2
+	ldr r9, r10
+	and r9, r9, r5
+	cmp r9, #0
+	beq SW3	
+	ldr r9, r10
+	and r9, r9, r6
+	cmp r9, #0
+	beq SW4	
+	b OFF
+SW1:
+	mov r1, #(1 << LED_PORT)
+	str r1, [r0, #GPSET0]
+	mov r2, #0x1f0000
+1:
+	subs r2, r2, #1
+	bne 1b
+
+	mov r1, #(1 << 10)
+	str r1, [r0, #GPCLR0]
+	mov r2, #0x1f0000
+
+2:
+	subs r2, r2, #1
+	bne 2b
+	b	loop0
+SW2:
+	mov r1, #(1 << LED_PORT)
+	str r1, [r0, #GPSET0]
+	mov r2, #0xc0000
+1:
+	subs r2, r2, #1
+	bne 1b
+
+	mov r1, #(1 << 10)
+	str r1, [r0, #GPCLR0]
+	mov r2, #0xc0000
+
+2:
+	subs r2, r2, #1
+	bne 2b
+	b	loop0
+SW3:
+	mov r1, #(1 << LED_PORT)
+	str r1, [r0, #GPSET0]
+	mov r2, #0x1f0000
+1:
+	subs r2, r2, #1
+	bne 1b
+
+	mov r1, #(1 << 10)
+	str r1, [r0, #GPCLR0]
+	mov r2, #0xc0000
+
+2:
+	subs r2, r2, #1
+	bne 2b
+	b	loop0
+
+SW4:
+	mov r1, #(1 << LED_PORT)
+	str r1, [r0, #GPSET0]
+	mov r2, #0x1f0000
+	b	loop0
+
 OFF:
 	mov	r1,	#(1 << LED_PORT)
 	str	r1,	[r0,	#GPSET1]	
