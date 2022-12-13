@@ -5,20 +5,24 @@ LDFRAGS = -m armelf
 OBJFLAGS = -O binary
 
 
-%: %.elf
+
+%.img: %.elf
 	$(OBJ) $< $(OBJFLAGS) $@
 
 %.elf: %.o
-	$(LD) $(LDFRAGS) $+ -o $@
+	$(LD) $(LDFRAGS) $< -o $@
 
 %.o: %.s
 	$(AS) $< -o $@
+
+%: %.s
+
 
 .PHONY: clean mizo mika yama tana
 
 mizo: file
 	scp $< 250373b@172.21.43.173:
-mika: file
+mika: light.img
 	scp $< 172.21.43.172:
 tana: file
 	scp $< 172.21.43.172:
