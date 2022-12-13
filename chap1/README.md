@@ -1,7 +1,7 @@
 # Source files
 - `light.s`
-	- LED$B$rE@Et$5$;$k%W%m%0%i%`!%(B
+	- LEDを点灯させるプログラム．
 - `blink.s`
-	- LED$B$r(B10$B2sE@LG$5$;$k%W%m%0%i%`!%(B
+	- LEDを10回点滅させるプログラム．
 - `switch.s`
 - `swled.s`
