@@ -27,4 +27,4 @@ mika: file
 	scp $< 172.21.43.172:
 
 clean:
-	rm -f *.o *~ *.out *.img
+	rm -f *.o *~ *.out *.img *.elf
