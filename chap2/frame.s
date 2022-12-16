@@ -67,7 +67,8 @@ rowRead:
 	colP:
 		mov	r1,	#(1 << COL1_PORT)
 		str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
-	add	r5,	r5,	#4
+	@ update buffer address
+	add	r5,	r5,	#1	@ 1Byteごとに動きたいなら，+1
 	row12:
 		and	r2,	r5,	r3
 		cmp	r2,	#0
