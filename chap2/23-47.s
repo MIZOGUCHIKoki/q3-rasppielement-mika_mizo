@@ -68,7 +68,7 @@ loop0:
 	mov     r1, #(1 << ROW3_PORT)
 	str     r1, [r0, #GPSET0]
 	mov     r1, #(1 << ROW4_PORT)
-	str     r1, [r0, #GPCLR0]
+	str     r1, [r0, #GPSET0]
 	mov     r1, #(1 << ROW5_PORT)
 	str     r1, [r0, #GPSET0]
 	mov     r1, #(1 << ROW6_PORT)
