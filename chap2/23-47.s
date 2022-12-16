@@ -41,78 +41,24 @@ _start:
 	@ 20-29 の一部を出力設定
 	ldr	r1,	=GPFSEL_VEC2
 	str	r1,	[r0,	#GPFSEL0 + 8]
-
+	@ turn on the (r,c) LED <=> col==1 && row==0
 loop0:
+	bl clear
 	@ col3, row2
-	mov     r1, #(1 << COL1_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL2_PORT)
-	str     r1, [r0, #GPCLR0]
 	mov     r1, #(1 << COL3_PORT)
 	str     r1, [r0, #GPSET0]			@	COL3, set "1"
-	mov     r1, #(1 << COL4_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL5_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL6_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL7_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL8_PORT)
-	str     r1, [r0, #GPCLR0]
-
-	mov     r1, #(1 << ROW1_PORT)
-	str     r1, [r0, #GPSET0]
 	mov     r1, #(1 << ROW2_PORT)
 	str     r1, [r0, #GPCLR0]			@ ROW2,	set "0"
-	mov     r1, #(1 << ROW3_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW4_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW5_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW6_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW7_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW8_PORT)
-	str     r1, [r0, #GPSET0]
-	bl clear
-
+	@ Clear
+	mov			r1,	#(1 << COL3_PORT)
+	str			r1,	[r0,	#GPCLR0]
+	mov			r1,	#(1 << ROW2_PORT)
+	mov			r1,	[r0,	#GPSET0]
 	@ col7,	row4
-	mov     r1, #(1 << COL1_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL2_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL3_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL4_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL5_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL6_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL7_PORT)
-	str     r1, [r0, #GPSET0]		@COL7,	set"1"
-	mov     r1, #(1 << COL8_PORT)
-	str     r1, [r0, #GPCLR0]
-
-	mov     r1, #(1 << ROW1_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW2_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW3_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW4_PORT)
-	str     r1, [r0, #GPCLR0]		@ROW7,	set"0"
-	mov     r1, #(1 << ROW5_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW6_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW7_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW8_PORT)
-	str     r1, [r0, #GPSET0]
+	mov			r1,	#(1 << COL7_PORT)
+	str			r1,	[r0,	#GPSET0]
+	mov			r1,	#(1 << ROW4_PORT)
+	str			r1,	[r0,	#GPCLR0]
 	b loop0
 clear:
 	mov     r1, #(1 << COL1_PORT)
