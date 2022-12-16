@@ -11,8 +11,8 @@ _start:
 	ldr	r1, =GPFSEL_VEC2
 	str	r1, [r0, #GPFSEL0 + 8]
 	
-	ldr	r1,	=frame_buffer		@ Read frame_buffer address
-	mov	r5,	#0x1
+	ldr	r5,	=frame_buffer		@ Read frame_buffer address
+	mov	r1,	#0x1
 	bl	clear				@ turn all LEDs off 
 rowRead:
 	row1:
@@ -68,7 +68,6 @@ rowRead:
 		str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
 loop:
 	b	loop
-
 clear:
 	mov     r1, #(1 << COL1_PORT)
 	str     r1, [r0, #GPCLR0]
