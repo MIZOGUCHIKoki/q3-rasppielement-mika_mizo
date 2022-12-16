@@ -11,11 +11,12 @@ _start:
 	ldr	r1, =GPFSEL_VEC2
 	str	r1, [r0, #GPFSEL0 + 8]
 	
-	mov	sp,	#STACK
-	ldr	r5,	=frame_buffer		@ Read frame_buffer address
+	mov	sp,	#STACK					@ clear stack pointer
+	ldr	r6,	=frame_buffer		@ Read frame_buffer address
 	mov	r3,	#0x1
 	bl	clear				@ turn all LEDs off 
 rowRead:
+	ldr	r5,	[r6]
 	row1:
 		and	r2,	r5,	r3
 		cmp	r2,	#0
@@ -68,7 +69,8 @@ rowRead:
 		mov	r1,	#(1 << COL1_PORT)
 		str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
 	@ update buffer address
-	add	r5,	r5,	#1	@ 1Byteごとに動きたいなら，+1
+	add	r6,	r6,	#1	@ 1Byteごとに動きたいなら，+1
+	ldr	r5,	[r6]
 	row12:
 		and	r2,	r5,	r3
 		cmp	r2,	#0
