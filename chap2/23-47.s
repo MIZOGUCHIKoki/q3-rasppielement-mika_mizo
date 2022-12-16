@@ -77,6 +77,7 @@ loop0:
 	str     r1, [r0, #GPSET0]
 	mov     r1, #(1 << ROW8_PORT)
 	str     r1, [r0, #GPSET0]
+	bl clear
 
 	@ col7,	row4
 	mov     r1, #(1 << COL1_PORT)
@@ -113,5 +114,40 @@ loop0:
 	mov     r1, #(1 << ROW8_PORT)
 	str     r1, [r0, #GPSET0]
 	b loop0
+clear:
+	mov     r1, #(1 << COL1_PORT)
+	str     r1, [r0, #GPCLR0]
+	mov     r1, #(1 << COL2_PORT)
+	str     r1, [r0, #GPCLR0]
+	mov     r1, #(1 << COL3_PORT)
+	str     r1, [r0, #GPCLR0]
+	mov     r1, #(1 << COL4_PORT)
+	str     r1, [r0, #GPCLR0]
+	mov     r1, #(1 << COL5_PORT)
+	str     r1, [r0, #GPCLR0]
+	mov     r1, #(1 << COL6_PORT)
+	str     r1, [r0, #GPCLR0]
+	mov     r1, #(1 << COL7_PORT)
+	str     r1, [r0, #GPCLR0]
+	mov     r1, #(1 << COL8_PORT)
+	str     r1, [r0, #GPCLR0]
+
+	mov     r1, #(1 << ROW1_PORT)
+	str     r1, [r0, #GPSET0]
+	mov     r1, #(1 << ROW2_PORT)
+	str     r1, [r0, #GPSET0]
+	mov     r1, #(1 << ROW3_PORT)
+	str     r1, [r0, #GPSET0]
+	mov     r1, #(1 << ROW4_PORT)
+	str     r1, [r0, #GPSET0]
+	mov     r1, #(1 << ROW5_PORT)
+	str     r1, [r0, #GPSET0]
+	mov     r1, #(1 << ROW6_PORT)
+	str     r1, [r0, #GPSET0]
+	mov     r1, #(1 << ROW7_PORT)
+	str     r1, [r0, #GPSET0]
+	mov     r1, #(1 << ROW8_PORT)
+	str     r1, [r0, #GPSET0]
+	bx			r14
 loop:
 	b       loop
