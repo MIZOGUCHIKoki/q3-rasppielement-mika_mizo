@@ -11,6 +11,7 @@ _start:
 	ldr	r1, =GPFSEL_VEC2
 	str	r1, [r0, #GPFSEL0 + 8]
 	
+	mov	sp,	#STACK
 	ldr	r5,	=frame_buffer		@ Read frame_buffer address
 	mov	r3,	#0x1
 	bl	clear				@ turn all LEDs off 
