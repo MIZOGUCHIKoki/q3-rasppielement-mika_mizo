@@ -9,6 +9,8 @@ OBJFLAGS = -O binary
 %.img: %.elf
 	$(OBJ) $< $(OBJFLAGS) $@
 
+frame.elf: frame.o frame_buffer.o
+	$(LD) $(LDFRAGS) $+ -o $@
 %.elf: %.o
 	$(LD) $(LDFRAGS) $< -o $@
 
@@ -16,8 +18,6 @@ OBJFLAGS = -O binary
 	$(AS) $< -o $@
 
 %: %.s
-
-
 
 .PHONY: clean mizo mika 
 
