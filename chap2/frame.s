@@ -12,61 +12,73 @@ _start:
 	str	r1, [r0, #GPFSEL0 + 8]
 	
 	mov	sp,	#STACK					@ clear stack pointer
-	ldr	r6,	=frame_buffer		@ Read frame_buffer address
+	ldr	r6,	=frame_buffer		@ Read frame_buffer's address
 	mov	r3,	#0x1
-	bl	clear				@ turn all LEDs off 
+	@bl	clear				@ turn all LEDs off 
+
+@ 	a b c d e f g h i	
+@	1|			COL:列
+@	2|			RAW:行
+@	3|			r行c列<=> (r,c)
+@	4|			
+@	5|			r == 0 && c == 1 -> 点灯
+@	6|
+@	7|
+@	8|
+
+
 rowRead:
-	ldrb	r5,	[r6]
-	row1:
-		and	r2,	r5,	r3
+	ldrb	r5,	[r6]	@ 1byteだけ読み込み
+	l1a:
+		and	r2,	r5,	r3,	lsl	#7
 		cmp	r2,	#0
-		beq	row2
-		mov	r1,	#(1 << ROW1_PORT)
+		beq	l1b
+		mov	r1,	#(1 << COL1_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row2:
-		and	r2,	r5, r3,	lsl #1
-		cmp	r2,	#0
-		beq	row3
-		mov	r1,	#(1 << ROW2_PORT)
-		str	r1,	[r0,	#GPSET0]
-	row3:
-		and	r2,	r5, r3,	lsl #2
-		cmp	r2,	#0
-		beq	row4
-		mov	r1,	#(1 << ROW3_PORT)
-		str	r1,	[r0,	#GPSET0]
-	row4:
-		and	r2,	r5, r3,	lsl #3
-		cmp	r2,	#0
-		beq	row5
-		mov	r1,	#(1 << ROW4_PORT)
-		str	r1,	[r0,	#GPSET0]
-	row5:
-		and	r2,	r5, r3,	lsl #4
-		cmp	r2,	#0
-		beq	row6
-		mov	r1,	#(1 << ROW5_PORT)
-		str	r1,	[r0,	#GPSET0]
-	row6:
-		and	r2,	r5,	r3,	lsl	#5
-		cmp	r2,	#0
-		beq	row7
-		mov	r1,	#(1 << ROW6_PORT)
-		str	r1,	[r0,	#GPSET0]
-	row7:
+	l1b:
 		and	r2,	r5, r3,	lsl #6
 		cmp	r2,	#0
-		beq	row8
-		mov	r1,	#(1 << ROW7_PORT)
+		beq	l1c
+		mov	r1,	#(1 << COL2_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row8:
-		and	r2,	r5, r3,	lsl #7
+	l1c:
+		and	r2,	r5, r3,	lsl #5
+		cmp	r2,	#0
+		beq	l1d
+		mov	r1,	#(1 << COL3_PORT)
+		str	r1,	[r0,	#GPSET0]
+	l1d:
+		and	r2,	r5, r3,	lsl #4
+		cmp	r2,	#0
+		beq	l1e
+		mov	r1,	#(1 << COL4_PORT)
+		str	r1,	[r0,	#GPSET0]
+	l1e:
+		and	r2,	r5, r3,	lsl #3
+		cmp	r2,	#0
+		beq	l1f
+		mov	r1,	#(1 << COL5_PORT)
+		str	r1,	[r0,	#GPSET0]
+	l1f:
+		and	r2,	r5,	r3,	lsl	#2
+		cmp	r2,	#0
+		beq	l1g
+		mov	r1,	#(1 << COL6_PORT)
+		str	r1,	[r0,	#GPSET0]
+	l1g:
+		and	r2,	r5, r3,	lsl #1
+		cmp	r2,	#0
+		beq	l1h
+		mov	r1,	#(1 << COL7_PORT)
+		str	r1,	[r0,	#GPSET0]
+	l1h:
+		and	r2,	r5, r3
 		cmp	r2,	#0
 		beq	colP
-		mov	r1,	#(1 << ROW8_PORT)
+		mov	r1,	#(1 << COL8_PORT)
 		str	r1,	[r0,	#GPSET0]
 	colP:
-		mov	r1,	#(1 << COL1_PORT)
+		mov	r1,	#(1 << ROW1_PORT)
 		str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
 	@ update buffer address
 	@add	r6,	r6,	#1	@ 1Byteごとに動きたいなら，+1
@@ -124,38 +136,38 @@ rowRead:
 	@	str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
 loop:
 	b	loop
-clear:
-	mov     r1, #(1 << COL1_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL2_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL3_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL4_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL5_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL6_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL7_PORT)
-	str     r1, [r0, #GPCLR0]
-	mov     r1, #(1 << COL8_PORT)
-	str     r1, [r0, #GPCLR0]
-
-	mov     r1, #(1 << ROW1_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW2_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW3_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW4_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW5_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW6_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW7_PORT)
-	str     r1, [r0, #GPSET0]
-	mov     r1, #(1 << ROW8_PORT)
-	str     r1, [r0, #GPSET0]
-	bx			r14
+@;clear:
+@;	mov     r1, #(1 << COL1_PORT)
+@;	str     r1, [r0, #GPCLR0]
+@;	mov     r1, #(1 << COL2_PORT)
+@;	str     r1, [r0, #GPCLR0]
+@;	mov     r1, #(1 << COL3_PORT)
+@;	str     r1, [r0, #GPCLR0]
+@;	mov     r1, #(1 << COL4_PORT)
+@;	str     r1, [r0, #GPCLR0]
+@;	mov     r1, #(1 << COL5_PORT)
+@;	str     r1, [r0, #GPCLR0]
+@;	mov     r1, #(1 << COL6_PORT)
+@;	str     r1, [r0, #GPCLR0]
+@;	mov     r1, #(1 << COL7_PORT)
+@;	str     r1, [r0, #GPCLR0]
+@;	mov     r1, #(1 << COL8_PORT)
+@;	str     r1, [r0, #GPCLR0]
+@;
+@;	mov     r1, #(1 << ROW1_PORT)
+@;	str     r1, [r0, #GPSET0]
+@;	mov     r1, #(1 << ROW2_PORT)
+@;	str     r1, [r0, #GPSET0]
+@;	mov     r1, #(1 << ROW3_PORT)
+@;	str     r1, [r0, #GPSET0]
+@;	mov     r1, #(1 << ROW4_PORT)
+@;	str     r1, [r0, #GPSET0]
+@;	mov     r1, #(1 << ROW5_PORT)
+@;	str     r1, [r0, #GPSET0]
+@;	mov     r1, #(1 << ROW6_PORT)
+@;	str     r1, [r0, #GPSET0]
+@;	mov     r1, #(1 << ROW7_PORT)
+@;	str     r1, [r0, #GPSET0]
+@;	mov     r1, #(1 << ROW8_PORT)
+@;	str     r1, [r0, #GPSET0]
+@;	bx			r14
