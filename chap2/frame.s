@@ -68,55 +68,55 @@ rowRead:
 		mov	r1,	#(1 << COL1_PORT)
 		str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
 	add	r5,	r5,	#4
-	row1:
+	row12:
 		and	r2,	r5,	r3
 		cmp	r2,	#0
-		beq	row2
+		beq	row22
 		mov	r1,	#(1 << ROW1_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row2:
+	row22:
 		and	r2,	r5, r3,	lsl #1
 		cmp	r2,	#0
-		beq	row3
+		beq	row32
 		mov	r1,	#(1 << ROW2_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row3:
+	row32:
 		and	r2,	r5, r3,	lsl #2
 		cmp	r2,	#0
-		beq	row4
+		beq	row42
 		mov	r1,	#(1 << ROW3_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row4:
+	row42:
 		and	r2,	r5, r3,	lsl #3
 		cmp	r2,	#0
-		beq	row5
+		beq	row52
 		mov	r1,	#(1 << ROW4_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row5:
+	row52:
 		and	r2,	r5, r3,	lsl #4
 		cmp	r2,	#0
-		beq	row6
+		beq	row62
 		mov	r1,	#(1 << ROW5_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row6:
+	row62:
 		and	r2,	r5,	r3,	lsl	#5
 		cmp	r2,	#0
-		beq	row7
+		beq	row72
 		mov	r1,	#(1 << ROW6_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row7:
+	row72:
 		and	r2,	r5, r3,	lsl #6
 		cmp	r2,	#0
-		beq	row8
+		beq	row82
 		mov	r1,	#(1 << ROW7_PORT)
 		str	r1,	[r0,	#GPSET0]
-	row8:
+	row82:
 		and	r2,	r5, r3,	lsl #7
 		cmp	r2,	#0
-		beq	colP
+		beq	colP2
 		mov	r1,	#(1 << ROW8_PORT)
 		str	r1,	[r0,	#GPSET0]
-	colP:
+	colP2:
 		mov	r1,	#(1 << COL2_PORT)
 		str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
 loop:
