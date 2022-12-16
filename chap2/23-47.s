@@ -57,7 +57,7 @@ loop0:
 	mov     r1, #(1 << COL6_PORT)
 	str     r1, [r0, #GPCLR0]
 	mov     r1, #(1 << COL7_PORT)
-	str     r1, [r0, #GPSCLR0]
+	str     r1, [r0, #GPCLR0]
 	mov     r1, #(1 << COL8_PORT)
 	str     r1, [r0, #GPCLR0]
 
