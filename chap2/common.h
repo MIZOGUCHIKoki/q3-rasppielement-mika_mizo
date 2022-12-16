@@ -24,4 +24,4 @@
 	.equ	ROW7_PORT, 7
 	.equ	ROW8_PORT, 16
 
-	.equ	STACK,	#0x8000
+	.equ	STACK,			0x8000
