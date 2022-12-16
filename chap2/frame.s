@@ -12,53 +12,53 @@ _start:
 	str	r1, [r0, #GPFSEL0 + 8]
 	
 	ldr	r5,	=frame_buffer		@ Read frame_buffer address
-	mov	r1,	#0x1
+	mov	r3,	#0x1
 	bl	clear				@ turn all LEDs off 
 rowRead:
 	row1:
-		and	r2,	r5,	r1
+		and	r2,	r5,	r3
 		cmp	r2,	#0
 		beq	row2
 		mov	r1,	#(1 << ROW1_PORT)
 		str	r1,	[r0,	#GPSET0]
 	row2:
-		and	r2,	r5, r1,	lsl #1
+		and	r2,	r5, r3,	lsl #1
 		cmp	r2,	#0
 		beq	row3
 		mov	r1,	#(1 << ROW2_PORT)
 		str	r1,	[r0,	#GPSET0]
 	row3:
-		and	r2,	r5, r1,	lsl #2
+		and	r2,	r5, r3,	lsl #2
 		cmp	r2,	#0
 		beq	row4
 		mov	r1,	#(1 << ROW3_PORT)
 		str	r1,	[r0,	#GPSET0]
 	row4:
-		and	r2,	r5, r1,	lsl #3
+		and	r2,	r5, r3,	lsl #3
 		cmp	r2,	#0
 		beq	row5
 		mov	r1,	#(1 << ROW4_PORT)
 		str	r1,	[r0,	#GPSET0]
 	row5:
-		and	r2,	r5, r1,	lsl #4
+		and	r2,	r5, r3,	lsl #4
 		cmp	r2,	#0
 		beq	row6
 		mov	r1,	#(1 << ROW5_PORT)
 		str	r1,	[r0,	#GPSET0]
 	row6:
-		and	r2,	r5,	r1,	lsl	#5
+		and	r2,	r5,	r3,	lsl	#5
 		cmp	r2,	#0
 		beq	row7
 		mov	r1,	#(1 << ROW6_PORT)
 		str	r1,	[r0,	#GPSET0]
 	row7:
-		and	r2,	r5, r1,	lsl #6
+		and	r2,	r5, r3,	lsl #6
 		cmp	r2,	#0
 		beq	row8
 		mov	r1,	#(1 << ROW7_PORT)
 		str	r1,	[r0,	#GPSET0]
 	row8:
-		and	r2,	r5, r1,	lsl #7
+		and	r2,	r5, r3,	lsl #7
 		cmp	r2,	#0
 		beq	colP
 		mov	r1,	#(1 << ROW8_PORT)
