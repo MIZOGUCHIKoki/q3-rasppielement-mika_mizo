@@ -9,12 +9,14 @@ OBJFLAGS = -O binary
 %.img: %.elf
 	$(OBJ) $< $(OBJFLAGS) $@
 
+swframe.elf: frame.o frame_buffer.o swframe.o
+	$(LD) $(LDFRAGS) $+ -o $@
 count.elf: count.o frame.o
 	$(LD) $(LDFRAGS) $+ -o $@
 %.elf: %.o
 	$(LD) $(LDFRAGS) $< -o $@
 
-%.o: %.s
+%.o: %.s 
 	$(AS) $< -o $@
 
 %: %.s
