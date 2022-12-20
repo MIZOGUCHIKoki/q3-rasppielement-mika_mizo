@@ -5,6 +5,14 @@ display:
 	@ LEDとディスプレイ用のIOポートを出力に設定する
 	@	using register
 	@	- r0,	r1,	r3,	r5,	r6
+	str	r0, [sp, #-4]!  
+	str	r1, [sp, #-4]! 
+	str	r2, [sp, #-4]! 
+	str	r3, [sp, #-4]!  
+	str	r5, [sp, #-4]! 
+	str	r6, [sp, #-4]! 
+	str	r14, [sp, #-4]! 
+
 	ldr	r0, =GPIO_BASE
 	ldr	r1, =GPFSEL_VEC0
 	str	r1, [r0, #GPFSEL0 + 0]
@@ -13,7 +21,6 @@ display:
 	ldr	r1, =GPFSEL_VEC2
 	str	r1, [r0, #GPFSEL0 + 8]
 	
-	mov	sp,	#STACK					@ clear stack pointer
 	ldr	r6,	=frame_buffer		@ Read frame_buffer's address
 	mov	r3,	#0x1
 
@@ -474,6 +481,13 @@ rowRead:
 		str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
 		bl	waite
 		bl	clear
+		ldr     r14, [sp], #4 
+		ldr     r6,  [sp], #4 
+		ldr     r5,  [sp], #4 
+		ldr     r3,  [sp], #4 
+		ldr     r2,  [sp], #4 
+		ldr     r1,	 [sp], #4 
+		ldr     r0,	 [sp], #4 
 		bx	r14
 
 clear:
