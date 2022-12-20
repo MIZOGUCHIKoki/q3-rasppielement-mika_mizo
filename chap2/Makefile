@@ -10,8 +10,7 @@ OBJFLAGS = -O binary
 	$(OBJ) $< $(OBJFLAGS) $@
 
 
-
-swframe.elf: frame.o frame_buffer.o swframe.o
+swframe.elf: display.o  swframe.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 count.elf: count.o display.o
