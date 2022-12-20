@@ -9,6 +9,7 @@ _start:
 	ldr	r10,	[r7]		@ r10='0'
 	orr	r11,	r9,	r10
 	str	r11,	[r8]
+	bl	display
 
 
 loop:
@@ -39,5 +40,6 @@ nb_all:
 	@	nb_all + [byte] = ??
 
 	.section	.data
+	.global		frame_buffer
 frame_buffer:
 	.byte	8	

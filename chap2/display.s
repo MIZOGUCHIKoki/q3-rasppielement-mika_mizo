@@ -474,10 +474,7 @@ rowRead:
 		str	r1,	[r0,	#GPCLR0]		@	set "0" to COL
 		bl	waite
 		bl	clear
-		b rowRead
-loop:
-	b	loop
-
+		bx	r14
 
 clear:
 	mov     r1, #(1 << COL1_PORT)
