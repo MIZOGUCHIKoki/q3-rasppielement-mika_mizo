@@ -16,7 +16,10 @@ swframe.elf: display.o  swframe.o
 count.elf: count.o display.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-%.elf: %.o
+count99.elf: count99.o display.o
+	$(LD) $(LDFRAGS) $+ -o $@
+
+%.elf: %.o 
 	$(LD) $(LDFRAGS) $< -o $@
 
 %.o: %.s 
