@@ -11,7 +11,11 @@ elif [ $USERNAME = "250372y" ]; then
 	echo -e "\e[31m MIKAMI on WS-Linux \e[m"
 	make $1.img
   cp $1.img /media/$USERNAME/boot/kernel7.img
-elif [ $USERNAME = "root" ]; then
-	echo -e "\e[31m MIZOGUCHI on Docker-Linux \e[m"
+elif [ $USERNAME = "koki" ]; then
+	echo -e "MIZOGUCHI on Mac"
+  docker cp ubuntu:/root/git/RasppiElement/chap2/$1.img ~/Documents/
+  mv ~/Documents/$1.img ~/Documents/kernel7.img
+  mv ~/Documents/kernel7.img /Volumes/boot/
+  diskutil unmount boot
 fi
 make clean
