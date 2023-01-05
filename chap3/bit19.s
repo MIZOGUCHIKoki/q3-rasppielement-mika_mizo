@@ -1,11 +1,10 @@
 	.include	"common.s"
-	.section .text
+	.section .init
 	.global _start
 
 @ Free regitser: r2
-@ Reserved register: r0, r1, r3, r4
-
-@GPFSEL0 = 0x00, GPFSEL1 = 0x04, GPFSEL2 = 0x08
+@ Reserved register: r0, r1, r4
+@ GPFSEL0 = 0x00, GPFSEL1 = 0x04, GPFSEL2 = 0x08
 
 _start:
 	ldr	r0,	=GPIO_BASE
