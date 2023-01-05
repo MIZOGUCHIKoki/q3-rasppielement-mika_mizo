@@ -1,36 +1,36 @@
-	.equ 	GPIO_BASE,	0x3f200000
-	.equ	GPFSEL1,	0x00
-	.equ	GPFSEL2,	0x04
-	.equ	GPFSEL3,	0x08
+	.equ	COUNT,	1500000
+	.include 			"common.s"
 
-	.equ	GPSET0,		0x1c
-	.equ	GPCLR0,		0x28
-
-	.equ	LED_PORT,	10
-	.equ	GPFSEL_VEC1,	0x00000001
-
-	.equ	COUNT,		0x1fd000
-	.equ	WAIT_TIME,	0x16e360
-
-
-	.section .text
+	.section .init
 	.global _start
+
+@ Free register: r2
+@ Reserved register: r0, r1, r3, r4, r5, r6
+@ GPFSEL0 = 0x00, GPFSEL1 = 0x04, GPFSEL2 = 0x08
+
 _start:
 	ldr	r0,	=GPIO_BASE
+	ldr	r1,	=TIMER_BASE
 
-	ldr	r1, 	=GPFSEL_VEC1
-	str	r1,	[r0, #GPFSEL2]
-
-	mov	r1,	#(1 << LED_PORT)
+	ldr	r2, =GPFSEL_VEC1_LED
+	str	r2,	[r0, #GPFSEL1]
 
 	ldr	r3,	=COUNT
-	ldr	r4,	=WAIT_TIME
+	mov	r4,	#(1 << LED_PORT)
 
-loop0:
-	ldr	r5,	[r0, -r3]
-	add	r6, 	r5,	r4
-	cmp	r5,	r6
-	strcs	r1,	[r0, #GPSET0]
-	strcc	r1,	[r0, #GPCLR0]
+	ldr	r5,	[r1,	#GPFSEL1]	@ start time
+	add	r5,	r5,	r3					@ target turn off time
 
-	b loop0
+on:
+	ldr		r6,	[r1, #GPFSEL1]	@ current time
+	cmp		r6,	r5
+	strcc	r4,	[r0, #GPSET0] 	@ below [Turn on]	r6 < r5
+	bcc		on
+	str		r4,	[r0, #GPCLR0] 	@ Turn off
+	add		r5,	r3
+off:
+	ldr		r7,	[r1, #GPFSEL1]
+	cmp		r7,	r5
+	bcc		off
+	add	r5,	r5,	r3					@ target turn off time
+	b on
