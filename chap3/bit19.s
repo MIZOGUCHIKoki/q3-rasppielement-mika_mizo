@@ -11,7 +11,7 @@ _start:
 	ldr	r1,	=TIMER_BASE
 
 	@ difine output port
-	ldr	r2, 	=GPFSEL_VEC1
+	ldr	r2, =GPFSEL_VEC1_LED
 	str	r2,	[r0, #GPFSEL1]
 
 	mov	r4,	#(1 << LED_PORT)
