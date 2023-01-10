@@ -1,4 +1,4 @@
-	.include	"common.s"
+	.include	"common.h"
 	.section 	.init
 	.global 	_start
 _start:
