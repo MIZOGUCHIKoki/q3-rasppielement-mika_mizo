@@ -17,7 +17,7 @@ display:
 @ r == 0 && c == 1 -> 点灯
 	ldr	r3,	=row		@ row port number
 	mov	r4,	#0			@ rowLoopVar::i
-	ldr		r5,	=frame_buffer		@ Read frame_buffer's address
+	ldr	r5,	=frame_buffer		@ Read frame_buffer's address
 rowLoop:
 	bl		clear		@ clear
 	ldrb	r6,	[r5, r4]	@ Read only 1byte form frame_buffer offset
@@ -64,8 +64,8 @@ clear:
 
 @ waite method
 waite:
-	ldr	r5,	=0xff
+	ldr	r1,	=0xff
 	1:
-		subs	r5,	r5,	#1
+		subs	r1,	r1,	#1
 		bne		1b
 	bx	r14
