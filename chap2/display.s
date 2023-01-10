@@ -23,9 +23,35 @@ display:
 @ COL:列	RAW:行
 @ r行c列<=> (r,c)
 @ r == 0 && c == 1 -> 点灯
+	ldr	r3,	=row		@ row port number
+	mov	r4,	#0			@ rowLoopVar::i
+rowLoop:
 	bl		clear		@ clear
-	ldr		r6,	=frame_buffer		@ Read frame_buffer's address
-	ldrb	r5,	[r6]	@ 1byteだけ読み込み
+	ldr		r5,	=frame_buffer		@ Read frame_buffer's address
+	add		r5,	r5,	r4		@ r6+=i
+	add		r3,	r3,	r4		@	r3+=i
+	ldrb	r6,	[r5]	@ Read only 1byte form frame_buffer
+	ldrb	r7,	[r3]	@ Read only 1byte	form Row_Port
+	mov		r8,	#0		@ colLoopVar::j0
+	mov		r9,	#7		@ colLoopVar::j1
+	ldr		r2,	=col		@ col port number 
+colLoop:
+	and		r2,	r2,	r8
+	ldrb	r10,	[r2]	@ Read only 1byte form Col_Port
+	and		r1,	r6,	r3,	lsl	r9
+	cmp		r1,	#0
+	movne	r1,	#(1 << r8)
+	strne	r1,	[r0, #(GPSET0)]
+	add		r8,	r8,	#1
+	sub		r9,	r9,	#1
+	cmp		r8,	#8
+	b			colLoop
+rowLoopE:
+	mov		r1,	#(1 << r4)
+	str		r1,	[r0,	#GPCLR0]
+	add		r4,	r4,	#1
+	cmp		r4,	#8
+	bne		rowLoop
 
 @pop
 	ldr		r14, [sp], #4 
