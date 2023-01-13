@@ -40,11 +40,11 @@ colLoop:
 	sub		r9,	r9,	#1
 	cmp		r8,	#8
 	bne		colLoop
-@rowLoopE
+@ rowLoopE
 	mov		r12,	#0x01
 	lsl		r1,	r12, r7
 	str		r1,	[r0, #GPCLR0]
-@pop
+@	pop
 	pop	{r0 - r12, r14}
 	bx		r14
 
