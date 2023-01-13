@@ -1,3 +1,6 @@
+@ display.s
+@ Reference bit-string : `frame_buffer`
+@ Resrved register : r0 - r12, r14 (Pushed)
 	.include	"common.s"
 	.section 	.text
 	.global 	display
