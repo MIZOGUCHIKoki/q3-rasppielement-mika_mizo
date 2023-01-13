@@ -9,7 +9,7 @@ OBJFLAGS = -O binary
 %.img: %.elf
 	$(OBJ) $< $(OBJFLAGS) $@
 
-count100sec.elf: count100sec.o
+count100sec.elf: count100sec.o display.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 bar.elf: bar.o
