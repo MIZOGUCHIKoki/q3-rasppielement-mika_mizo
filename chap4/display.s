@@ -1,4 +1,4 @@
-	.include	"common.h"
+	.include	"common.s"
 	.section 	.text
 	.global 	display
 display:
