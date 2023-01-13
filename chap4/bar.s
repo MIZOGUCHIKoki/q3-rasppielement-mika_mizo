@@ -30,23 +30,23 @@ loop0:
 	ldr	r9, 	[r3, #GPFSEL1]
 loop1:
 	ldr	r12,	[r5, r8, lsl #2]
-	add	r9,	r9,	r12
+	add	r4,	r4,	r12
 	cmp	r4, 	r9
-	
+
 	strcc	r7,	[r6]
 	addcc	r9, 	r9,	r2
 	strcc	r9,	[r5, r8, lsl #2]
 	
 	bl	display
 	
-	add	r8,	#1
-	cmp	r8, 	#9
-	ldrne	r4,	[r5, r8, lsl #2]
+	add	r8,	r8,	#1
+	cmp	r8, 	#16
 	lsrne	r10,	r7,	r8
-	eorne	r7,	r7,	r10
+	eorne	r11,	r7,	r10
+	movne	r7,	r11
+	bne	loop1
 	moveq	r8, 	#0
 	beq	loop0
-	b	loop1
 
 loop:	b	loop
 	
