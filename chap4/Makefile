@@ -13,7 +13,7 @@ OBJFLAGS = -O binary
 count100sec.elf: count100sec.o display.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-bar.elf: bar.o
+bar.elf: bar.o display.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 ledtask.elf: ledtask.o
