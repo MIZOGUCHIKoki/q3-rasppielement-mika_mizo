@@ -1,36 +1,37 @@
-@ target time = r10
+@------------------------------------
+@ target time = r7
 @ not Reserved register = r0, r6, r7
+@
 @ while(true) {
 @	 if (target time < Current time) {
 @			writeFrame_buffer;
 @	 }
 @ dislpay;
 @ }
+@------------------------------------
 	.equ			count,	1000000
 	.include	"common.s"
 	.section 	.init
 	.global 	_start
 _start:
-	mov	sp,		#STACK					@ clear stack pointer
+	mov	sp,		#STACK					@ initalize stack pointer
 	ldr	r1,		=frame_buffer
 	ldr r9,		=TIMER_BASE
 	ldr	r5,		=nb_all
 @ initialize target time
-	ldr	r0,		=count
-	ldr	r7,		[r1, #GPFSEL1]
-	add	r10,	r7,		r0				@ set target time (current + 1sec)
+	ldr	r7,		[r9, #GPFSEL1]
 @ setting loop variable
 	mov	r11,	#0
 	mov	r12,	#0
 loop:
-@ Task: [ Count Timer ]
-	ldr		r6,		[r9, #GPFSEL1]
-	cmp		r6,		r10			@	Current, Target
-	bcs		endp					@ Currnet >= Target
-	ldr		r0,		=count
-	add		r10,	r0,	r11
 @ Task: [ Struct strings ]
 writeFrame_buffer:
+	ldr		r6,		[r9, #GPFSEL1]	@ r6 current
+	cmp		r6,		r7			@	Current, Target
+	bcc		endp					@ Currnet < Target
+	ldr		r0,		=count	
+	add		r7,	r0,	r7	@ update target time
+	@ Write Process
 	mov		r2,		#7
 	ldr		r0,		=nb_all
 	ldr		r3,		[r0,	r11,	lsl	#2]					@ r3 = nb_0's address r11 * 4(byte)
