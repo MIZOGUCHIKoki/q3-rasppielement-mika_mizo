@@ -1,19 +1,41 @@
+@ target time = r10
+@ not Reserved register = r0, r6, r7
+@ while(true) {
+@	 if (target time < Current time) {
+@			writeFrame_buffer;
+@	 }
+@ dislpay;
+@ }
+	.equ			count,	1000000
+	.include	"common.s"
 	.section 	.init
 	.global 	_start
 _start:
-	mov	sp,		#8000					@ clear stack pointer
-	ldr	r0,		=nb_all
+	mov	sp,		#STACK					@ clear stack pointer
 	ldr	r1,		=frame_buffer
+	ldr r9,		=TIMER_BASE
+	ldr	r5,		=nb_all
+@ initialize target time
+	ldr	r0,		=count
+	ldr	r7,		[r1, #GPFSEL1]
+	add	r10,	r7,		r0				@ set target time (current + 1sec)
+@ setting loop variable
 	mov	r11,	#0
 	mov	r12,	#0
-	ldr	r5,		=nb_all
-number:
-	mov		r10,	#700
+loop:
+@ Task: [ Count Timer ]
+	ldr		r6,		[r9, #GPFSEL1]
+	cmp		r6,		r10			@	Current, Target
+	bcs		endp					@ Currnet >= Target
+	ldr		r0,		=count
+	add		r10,	r0,	r11
+@ Task: [ Struct strings ]
+writeFrame_buffer:
 	mov		r2,		#7
+	ldr		r0,		=nb_all
 	ldr		r3,		[r0,	r11,	lsl	#2]					@ r3 = nb_0's address r11 * 4(byte)
 	ldr		r8,		[r0,	r12,	lsl	#2]
-
-	multi:	@ struct string
+	multi:
 		ldrb	r6,		[r8,	r2]
 		lsl		r6,		#4
 		ldrb	r4,		[r3,	r2]			@ r4 = nb_0[r2]		read only 1Byte
@@ -21,10 +43,6 @@ number:
 		strb	r7,		[r1,	r2]			@ store
 		subs	r2,		r2,		#1
 		bpl		multi								@ 0以上
-	dip:
-		bl		display
-		subs	r10,	r10,	#1
-		bne		dip
 	
 	addeq	r11,	r11,	#1	
 	cmp		r11,	#10
@@ -33,8 +51,9 @@ number:
 	addeq	r12,	r12,	#1
 	cmp		r12,	#10
 	moveq	r12,	#0
-
-	b	number
+endp:
+	bl	display
+	b	loop
 @	----- data base -----
 nb_0:
 	.byte	0x0,	0xe,	0xa,	0xa,	0xa,	0xe,	0x0,	0x0
