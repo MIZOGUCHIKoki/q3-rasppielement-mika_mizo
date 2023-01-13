@@ -27,7 +27,7 @@ number:
 		subs	r10,	r10,	#1
 		bne		dip
 	
-	addeq	r11,	r11,	#1	
+	add		r11,	r11,	#1	
 	cmp		r11,	#10
 	moveq	r11,	#0
 
