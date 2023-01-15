@@ -1,7 +1,6 @@
 @------------------------------------
-@ subRutine : display, writeProcess
+@ subRutine : display, writeProcess, read_switch
 @ target time = r7,	r4(LED)
-@ not Reserved register = r0, r6
 @------------------------------------
 	.equ			count,	100000		@ 0.1sec
 	.equ			led,		500000    @ 0.5sec
@@ -9,30 +8,44 @@
 	.section 	.init
 	.global 	_start, nb_all
 _start:
-	mov	sp,		#STACK					@ initalize stack pointer
-	ldr r9,		=TIMER_BASE
+	ldr r0, =GPIO_BASE
+	ldr r9,	=TIMER_BASE
+
+	ldr	r1, =GPFSEL_VEC0
+	str	r1, [r0, #GPFSEL0 + 0]
+	ldr	r1, =GPFSEL_VEC1
+	str	r1, [r0, #GPFSEL0 + 4]
+	ldr	r1, =GPFSEL_VEC2
+	str	r1, [r0, #GPFSEL0 + 8]
+@ initalize stack pointer and display
+	mov	sp,		#STACK
+  bl  clear
 @ initialize target time
 	ldr	r7,		[r9, #GPFSEL1]
-	ldr	r0,		=led
-	add	r4,		r0,	r7  @ r4 :: LED
-	ldr	r0,		=count
-	add	r7,		r0,	r7  @ r7 :: count
+	ldr	r1,		=led
+	add	r4,		r1,	r7  @ r4 :: LED
+	ldr	r1,		=count
+	add	r7,		r1,	r7  @ r7 :: count
 @ setting loop variable
 	mov	r11,	#0
 	mov	r12,	#0
 loop:
 @ Task: [ Find out if a button is pressed ]
-  
+  @bl    read_switch @ Overwriten register {r0, r1}
+  @cmp   r1,   #1
+  @beq   loop
+
 @ Task: [ Struct strings ]
 	ldr		r6,		[r9, #GPFSEL1]	@ r6 current
 	cmp		r6,		r7			@	Current, Target
 	bcc 	endp					@ Currnet < Target
-	ldr		r0,		=count	
-	add		r7,	r0,	r7	@ update target time
-  bl  writeProcess  @ pushed register {r1}
+	ldr		r1,		=count	
+	add		r7,	r1,	r7	  @ update target time
+  bl    writeProcess  @ Overwriten register {r0 - r3, r5 - r8}
+
 endp:
-	bl	display
-	b	  loop
+	bl	  display
+	b	    loop
 @	----- data base -----
 nb_0:
 	.byte	0x0,	0xe,	0xa,	0xa,	0xa,	0xe,	0x0,	0x0
