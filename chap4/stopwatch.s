@@ -39,8 +39,6 @@ loop:
   cmp   r1,   #1
   moveq r5,   #0
   
-  cmp   r5,   #1
-  beq   endp
 @ Task: [ Struct strings ]
 structStrings:
 	ldr		r6,		[r9, #GPFSEL1]	@ r6 current
@@ -48,7 +46,7 @@ structStrings:
 	bcc 	endp					@ Currnet < Target
 	ldr		r1,		=count	
 	add		r7,	r1,	r7	  @ update target time
-  bl    writeProcess  @ Pushed register {r0 - r3, r5, r6, r8}
+  bl    writeProcess  @ Pushed register {r0 - r4, r6, r8}
 
 endp:
 	bl	  display
