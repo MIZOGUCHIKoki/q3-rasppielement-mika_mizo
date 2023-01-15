@@ -6,7 +6,9 @@
 @	 if (target time < Current time) {
 @			writeFrame_buffer;
 @	 }
-@ dislpay;
+@	 if (target time < Cirrent time) {
+@			diplay_row;
+@  }
 @ }
 @------------------------------------
 	.equ			count,	1000000		@ 1sec
