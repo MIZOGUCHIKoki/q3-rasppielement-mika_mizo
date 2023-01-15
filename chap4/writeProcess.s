@@ -1,6 +1,5 @@
 @ write number bit strings  (00 - 99) to frame buffer.
 @ loop variable: r11, r12
-  .include  "common.s"
   .section  .text
   .global   writeProcess
 
