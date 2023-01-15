@@ -1,17 +1,18 @@
 @------------------------------------
 @ subRutine : display, writeProcess, read_switch
-@ target time : r7,	r4(LED)
+@ target time : r7,	r4(LED_On), r3(LED_Off)
 @ flag : r5
 @------------------------------------
 	.equ			count,	100000		@ 0.1sec
 	.equ			led,		500000    @ 0.5sec
+  .equ      sec,    1000000   @ 1sec
 	.include	"common.s"
 	.section 	.init
 	.global 	_start, nb_all
 _start:
 	ldr r0, =GPIO_BASE
 	ldr r9,	=TIMER_BASE
-  mov r5, #0
+  mov r5, #0      @ flag
 
 	ldr	r1, =GPFSEL_VEC0
 	str	r1, [r0, #GPFSEL0 + 0]
@@ -25,7 +26,9 @@ _start:
 @ initialize target time
 	ldr	r7,		[r9, #GPFSEL1]
 	ldr	r1,		=led
-	add	r4,		r1,	r7  @ r4 :: LED
+	add	r4,		r1,	r7  @ r4 :: LED_ON
+  ldr r1,   =sec
+  add r3,   r1, r7  @ r3 :: LED_OFF
 	ldr	r1,		=count
 	add	r7,		r1,	r7  @ r7 :: count
 @ setting loop variable
@@ -48,6 +51,23 @@ structStrings:
 	add		r7,	r1,	r7	  @ update target time
   bl    writeProcess  @ Pushed register {r0 - r4, r6, r8}
 
+@ Task: [ LED flashing]
+LED_Flashing:
+  ldr   r8,   =sec
+  ldr   r0,   =GPIO_BASE
+  mov   r1,   #(1 << LED_PORT)
+  ldr   r6,   [r9, #GPFSEL1]
+  cmp   r4,   r3
+  bcs   off       @ on >= off
+  on:
+    cmp   r6,   r4
+    strcc r1,   [r0, #GPSET0] @ ON
+    addcs r4,   r6, r8
+    b     endp
+  off:
+    cmp   r6,   r3
+    strcc r1,   [r0, #GPCLR0] @ OFF
+    addcs r3,   r6, r8
 endp:
 	bl	  display
 	b	    loop
