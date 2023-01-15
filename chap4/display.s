@@ -3,7 +3,7 @@
 @ Resrved register : r0 - r12, r14 (Pushed)
 	.include	"common.s"
 	.section 	.text
-	.global 	display
+	.global 	display, clear
 display:
 	push	{r0 - r12, r14}
 
