@@ -1,6 +1,7 @@
 @------------------------------------
 @ subRutine : display, writeProcess, read_switch
-@ target time = r7,	r4(LED)
+@ target time : r7,	r4(LED)
+@ flag : r5
 @------------------------------------
 	.equ			count,	100000		@ 0.1sec
 	.equ			led,		500000    @ 0.5sec
@@ -10,6 +11,7 @@
 _start:
 	ldr r0, =GPIO_BASE
 	ldr r9,	=TIMER_BASE
+  mov r5, #0
 
 	ldr	r1, =GPFSEL_VEC0
 	str	r1, [r0, #GPFSEL0 + 0]
@@ -31,17 +33,22 @@ _start:
 	mov	r12,	#0
 loop:
 @ Task: [ Find out if a button is pressed ]
-  @bl    read_switch @ Overwriten register {r0, r1}
-  @cmp   r1,   #1
-  @beq   loop
-
+  bl    read_switch @ Overwriten register {r1}
+  cmp   r1,   #2    @ pressed stop button
+  moveq r5,   #1
+  cmp   r1,   #1
+  moveq r5,   #0
+  
+  cmp   r5,   #1
+  beq   endp
 @ Task: [ Struct strings ]
+structStrings:
 	ldr		r6,		[r9, #GPFSEL1]	@ r6 current
 	cmp		r6,		r7			@	Current, Target
 	bcc 	endp					@ Currnet < Target
 	ldr		r1,		=count	
 	add		r7,	r1,	r7	  @ update target time
-  bl    writeProcess  @ Overwriten register {r0 - r3, r5 - r8}
+  bl    writeProcess  @ Pushed register {r0 - r3, r5, r6, r8}
 
 endp:
 	bl	  display
