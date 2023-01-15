@@ -4,7 +4,6 @@
   .global   writeProcess
 
 writeProcess:
-  push  {r1}
 	ldr	  r1,		=frame_buffer
   ldr   r5,   =nb_all
 	mov		r2,		#7
@@ -27,5 +26,4 @@ writeProcess:
 	addeq	r12,	r12,	#1
 	cmp		r12,	#10
 	moveq	r12,	#0
-  pop   {r1}
   bx    r14
