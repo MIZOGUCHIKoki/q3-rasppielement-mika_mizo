@@ -41,3 +41,8 @@
 	.equ	ROW8_PORT, 16
 @ Timer base
 	.equ	TIMER_BASE,	0x3f003000
+@ Switch Port
+  .equ  SW_1,      13
+  .equ  SW_2,      26
+  .equ  SW_3,      5
+  .equ  SW_4,      6

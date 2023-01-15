@@ -71,7 +71,7 @@ disp:
 	cmp		r6,		r1			@	Current, Target
 	bcc		endp					@ Currnet < Target
 	mov		r0,		#dpr	
-	add		r1,		r0,	r1	@ update target time
+	add		r1,		r0,	r6	@ update target time
 	add		r4,		r4,	#1
 	cmp		r4,		#8
 	moveq	r4,		#0

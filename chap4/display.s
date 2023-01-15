@@ -3,17 +3,9 @@
 @ Resrved register : r0 - r12, r14 (Pushed)
 	.include	"common.s"
 	.section 	.text
-	.global 	display
+	.global 	display, clear
 display:
 	push	{r0 - r12, r14}
-
-	ldr	r0, =GPIO_BASE
-	ldr	r1, =GPFSEL_VEC0
-	str	r1, [r0, #GPFSEL0 + 0]
-	ldr	r1, =GPFSEL_VEC1
-	str	r1, [r0, #GPFSEL0 + 4]
-	ldr	r1, =GPFSEL_VEC2
-	str	r1, [r0, #GPFSEL0 + 8]
 
 @ COL:列	RAW:行
 @ r行c列<=> (r,c)
