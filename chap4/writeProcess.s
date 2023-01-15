@@ -1,5 +1,5 @@
 @ write number bit strings  (00 - 99) to frame buffer.
-@ loop variable: r11, r12
+@ struct number r12 | r11
   .section  .text
   .global   writeProcess
 
