@@ -27,8 +27,7 @@ _start:
 	ldr	r7,		[r9, #GPFSEL1]
 	ldr	r1,		=led
 	add	r4,		r1,	r7  @ r4 :: LED_ON
-  ldr r1,   =sec
-  add r3,   r1, r7  @ r3 :: LED_OFF
+  mov r3,   #0      @ on -> 0, off -> 1
 	ldr	r1,		=count
 	add	r7,		r1,	r7  @ r7 :: count
 @ setting loop variable
@@ -53,21 +52,23 @@ structStrings:
 
 @ Task: [ LED flashing]
 LED_Flashing:
-  ldr   r8,   =sec
+  ldr   r8,   =led
   ldr   r0,   =GPIO_BASE
   mov   r1,   #(1 << LED_PORT)
-  ldr   r6,   [r9, #GPFSEL1]
-  cmp   r4,   r3
-  bcs   off       @ on >= off
+  ldr   r6,   [r9, #GPFSEL1]  @ load current time
+  cmp   r3,   #1  @ (if LED is off)
+  beq   off
   on:
     cmp   r6,   r4
     strcc r1,   [r0, #GPSET0] @ ON
     addcs r4,   r6, r8
+    movcs r3,   #1
     b     endp
   off:
-    cmp   r6,   r3
+    cmp   r6,   r4
     strcc r1,   [r0, #GPCLR0] @ OFF
-    addcs r3,   r6, r8
+    addcs r4,   r6, r8
+    movcs r3,   #0
 endp:
 	bl	  display
 	b	    loop
