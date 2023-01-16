@@ -10,16 +10,19 @@ OBJFLAGS = -O binary
 	$(OBJ) $< $(OBJFLAGS) $@
 	rm *.o *.elf 
 
-count100sec.elf: count100sec.o display_row.o
+jiho.elf: jiho.o display_row.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-bar.elf: bar.o 
+music.elf: music.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-ledtask.elf: ledtask.o
+fade.elf: fade.o 
 	$(LD) $(LDFRAGS) $+ -o $@
 
-stopwatch.elf: stopwatch.o display.o writeProcess.o read_switch.o
+doremi.elf: doremi.o
+	$(LD) $(LDFRAGS) $+ -o $@
+
+ra.elf: ra.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 %.elf: %.o 
