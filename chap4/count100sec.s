@@ -17,21 +17,21 @@
 	.section 	.init
 	.global 	_start
 _start:
-	mov	sp,		#STACK					@ initalize stack pointer
-	ldr	r1,		=frame_buffer
+	mov		sp,		#STACK					@ initalize stack pointer
+	ldr		r1,		=frame_buffer
 	push	{r1}
-	ldr r9,		=TIMER_BASE
-	ldr	r5,		=nb_all
+	ldr 	r9,		=TIMER_BASE
+	ldr		r5,		=nb_all
 @ initialize target time
-	ldr	r7,		[r9, #GPFSEL1]
-	ldr	r0,		=count
-	add	r7,		r0,	r7
-	mov	r0,		#dpr
-	add	r1,		r0,	r7
+	ldr		r7,		[r9, #GPFSEL1]
+	ldr		r0,		=count
+	add		r7,		r0,	r7
+	mov		r0,		#dpr
+	add		r1,		r0,	r7
 @ setting loop variable
-	mov	r11,	#0
-	mov	r12,	#0
-	mov	r4,		#0
+	mov		r11,	#0
+	mov		r12,	#0
+	mov		r4,		#0
 loop:
 @ Task: [ Struct strings ]
 writeFrame_buffer:
