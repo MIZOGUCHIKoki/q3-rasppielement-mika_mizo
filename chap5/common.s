@@ -10,7 +10,7 @@
 	@ GPFSEL0 Display
 	.equ	GPFSEL_VEC0, 0x01201000 
 	@ GPFSEL1 LED, Display, Speacker
-	.equ	GPFSEL_VEC1,		0x9249041
+	.equ	GPFSEL_VEC1,		0x11249041
 	@ GPFSEL1 LED, Display
 		@.equ	GPFSEL_VEC1_LD, 0x01249041 
 	@ GPFSEL1 only LED
@@ -52,3 +52,10 @@
 	.equ	CM_BASE,	 0x3f101000
 	.equ	CM_PWMCTL, 0xa0
 	.equ	CM_PWMDIV, 0xa4
+@ PWM
+	.equ	PWM_BASE,	 0x3f20c000
+	.equ	PWM_RNG2,	 0x20
+	.equ	PWM_DAT2,	 0x24
+	.equ	PWM_CTR,	 0x00
+	.equ	PWM_MSEN2, 15
+	.equ	PWM_PWEN2, 8
