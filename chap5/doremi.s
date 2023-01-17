@@ -40,7 +40,7 @@ _start:
 
 	@set PWM
 	ldr	r0,	=PWM_BASE
-	ldr	r1,	=(1 << CTL_PWEN2 | 1 << CTL_MSEN2)
+	ldr	r1,	=(1 << PWM_PWEN2 | 1 << PWM_MSEN2)
 	str	r1,	[r0, #PWM_CTL]
 
 	ldr	r2,	=GtoG
