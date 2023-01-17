@@ -19,7 +19,7 @@ bar.elf: bar.o
 ledtask.elf: ledtask.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-stopwatch.elf: stopwatch.o display.o writeProcess.o read_switch.o
+stopwatch.elf: stopwatch.o display_row.o writeProcess.o read_switch.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 %.elf: %.o 
