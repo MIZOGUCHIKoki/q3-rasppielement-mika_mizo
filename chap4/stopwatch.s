@@ -45,7 +45,7 @@ loop:
 structStrings:
 	ldr		r6,		[r9, #GPFSEL1]	@ r6 current
 	cmp		r6,		r7			@	Current, Target
-	bcc 	endp					@ Currnet < Target
+	bcc 	LED_Flashing	@ Currnet < Target
 	ldr		r1,		=count	
 	add		r7,	r1,	r7	  @ update target time
   bl    writeProcess  @ Pushed register {r0 - r4, r6, r8}
