@@ -46,3 +46,7 @@
   .equ  SW_2,      26
   .equ  SW_3,      5
   .equ  SW_4,      6
+@ Speacker
+	.equ	CM_BASE,	 0x3f101000
+	.equ	CM_PWMCTL, 0xa0
+	.equ	CM_PWMDIV, 0xa4
