@@ -56,6 +56,6 @@
 	.equ	PWM_BASE,	 0x3f20c000
 	.equ	PWM_RNG2,	 0x20
 	.equ	PWM_DAT2,	 0x24
-	.equ	PWM_CTR,	 0x00
+	.equ	PWM_CTL,	 0x00
 	.equ	PWM_MSEN2, 15
 	.equ	PWM_PWEN2, 8
