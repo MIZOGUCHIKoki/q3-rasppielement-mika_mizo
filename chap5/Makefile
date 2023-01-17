@@ -22,7 +22,7 @@ fade.elf: fade.o
 doremi.elf: doremi.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-ra.elf: ra.o
+ra.elf: ra.o setCM.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 %.elf: %.o 
