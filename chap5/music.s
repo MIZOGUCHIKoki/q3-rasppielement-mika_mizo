@@ -5,14 +5,12 @@
 _start:
 	mov	sp,	#STACK
 	mov	r5, 	#0
-	ldr	r6,	=level
-	ldr	r7,	=on
-	ldr	r8,	=off
+	ldr	r6,	=soundData
+	ldr	r7,	=onp
 
-loop0:	
-	ldr	r2,	[r6, r5, lsl #2]
-	ldr	r3,	[r7, r5, lsl #2]
-	ldr	r4,	[r8, r5, lsl #2]
+loop0:
+	ldr	r8,	[r7, r5, lsl #2]
+	ldr	r2,	[r6, r8, lsl #2]
 
 	bl	sound
 
@@ -22,12 +20,14 @@ loop0:
 
 loop:	b	loop
 
-	.section	.data
-level:
-	.word	13753, 13753, 13753, 13753, 15434, 12244, 13753
 
-on:
-	.word 	0xaefff, 0xaefff, 0xaefff, 0xaefff, 0xaefff, 0xaefff, 0xfffff
-off:
-	.word	0xffaf, 0xffaf, 0xffaf, 0xffaf, 0xaffff, 0xfffff, 0xfffff
+	.section	.data
+soundData:
+	.word	18355, 16354, 14567, 13753, 12244, 10909
+onp:
+	.word 	0, 0, 4, 4, 5, 5, 4
+
+	.global		sound_buffer
+sound_buffer:
 	
+
