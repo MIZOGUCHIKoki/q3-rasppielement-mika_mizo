@@ -1,38 +1,28 @@
 @------------------------------------
-@ target time = r7,	r1
-@ not Reserved register = r0, r6
-@
-@ while(true) {
-@	 if (target time < Current time) {
-@			writeFrame_buffer;
-@	 }
-@	 if (target time < Cirrent time) {
-@			diplay_row;
-@  }
-@ }
 @------------------------------------
 	.equ			count,	1000000		@ 1sec
-	.equ			dpr,		1000
+	.equ			dpr,		1000      @ 0.0001sec
+	.equ			sound5,	500000		@ 0.5sec
+	.equ			sound1,	100000		@ 0.1sec
 	.include	"common.s"
 	.section 	.init
 	.global 	_start
 _start:
-	mov	sp,		#STACK					@ initalize stack pointer
-	bl	setCM
-	ldr	r1,		=frame_buffer
+	mov		sp,		#STACK					@ initalize stack pointer
+	bl		setCM
+	ldr		r1,		=frame_buffer
 	push	{r1}
-	ldr r9,		=TIMER_BASE
-	ldr	r5,		=nb_all
+	ldr 	r9,		=TIMER_BASE
 @ initialize target time
-	ldr	r7,		[r9, #GPFSEL1]
-	ldr	r0,		=count
-	add	r7,		r0,	r7
-	mov	r0,		#dpr
-	add	r1,		r0,	r7
+	ldr		r7,		[r9, #GPFSEL1]
+	mov		r0,		#dpr
+	add		r1,		r0,	r7	
+	ldr		r0,		=count
+	add		r7,		r0,	r7
 @ setting loop variable
-	mov	r11,	#0
-	mov	r12,	#0
-	mov	r4,		#0
+	mov		r11,	#0
+	mov		r4,		#0
+	mov		r5,		#0
 loop:
 @ Task: [ Struct strings ]
 writeFrame_buffer:
@@ -40,15 +30,20 @@ writeFrame_buffer:
 	cmp		r6,		r7			@	Current, Target
 	bcc		disp					@ Currnet < Target
 	ldr		r0,		=count	
-	add		r7,	r0,	r7	@ update target time
+	add		r7,		r0,	r7	@ update target time
+	ldr		r0,		=sound1
+	add		r12,	r6,	r0	@ update sound target time
+	ldr		r0,		=sound5
+	add		r3,		r6,	r0
 	@ Write Process
 	mov		r2,		#7
 	ldr		r0,		=nb_all
-	ldr		r3,		[r0,	r11,	lsl	#2]					@ r3 = nb_0's address r11 * 4(byte)
+	ldr		r9,		[r0,	r11,	lsl	#2]					
+	ldr		r8,		=nb_0
 	multi:
 		ldrb	r6,		[r8,	r2]
 		lsl		r6,		#4
-		ldrb	r0,		[r3,	r2]			@ r0 = nb_0[r2]		read only 1Byte
+		ldrb	r0,		[r9,	r2]			
 		pop		{r1}
 		push	{r7}
 		orr		r7,		r0,		r6
@@ -57,24 +52,30 @@ writeFrame_buffer:
 		push	{r1}
 		subs	r2,		r2,		#1
 		bpl		multi								@ 0以上
-	
+	mov		r10,	r11
 	add		r11,	r11,	#1	
+	add		r5,		r5,		#1
 	cmp		r11,	#10
 	moveq	r11,	#0
 @ Task: [ display ]
 disp:
+	ldr		r9,		=TIMER_BASE
 	ldr		r6,		[r9, #GPFSEL1]	@ r6 current
 	cmp		r6,		r1			@	Current, Target
-	bcc		endp					@ Currnet < Target
+	bcc		sound					@ Currnet < Target
 	mov		r0,		#dpr	
 	add		r1,		r0,	r6	@ update target time
 	add		r4,		r4,	#1
 	cmp		r4,		#8
 	moveq	r4,		#0
 
+sound:
+	cmp		r5,		#1
+	beq		endp
+	bl		jiho_sound
 endp:
 	bl	display_row
-	b	loop
+	b		loop
 @	----- data base -----
 nb_0:
 	.byte	0x0,	0xe,	0xa,	0xa,	0xa,	0xe,	0x0,	0x0
