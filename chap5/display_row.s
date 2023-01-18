@@ -9,13 +9,6 @@ display_row:
 	push	{r0 - r12, r14}
 
 	ldr	r0, =GPIO_BASE
-	ldr	r1, =GPFSEL_VEC0
-	str	r1, [r0, #GPFSEL0 + 0]
-	ldr	r1, =GPFSEL_VEC1
-	str	r1, [r0, #GPFSEL0 + 4]
-	ldr	r1, =GPFSEL_VEC2
-	str	r1, [r0, #GPFSEL0 + 8]
-
 @ COL:列	RAW:行
 @ r行c列<=> (r,c)
 @ r == 0 && c == 1 -> 点灯
