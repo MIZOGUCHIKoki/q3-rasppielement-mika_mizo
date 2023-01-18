@@ -24,15 +24,19 @@ _start:
 	mov	sp,		#STACK
   bl  clear
 @ initialize target time
-	ldr	r7,		[r9, #GPFSEL1]
-	ldr	r1,		=led
-	add	r4,		r1,	r7  @ r4 :: LED_ON
-  mov r3,   #0      @ on -> 0, off -> 1
-	ldr	r1,		=count
-	add	r7,		r1,	r7  @ r7 :: count
+	ldr		r7,		[r9, #GPFSEL1]
+	ldr		r1,		=led
+	add		r4,		r1,	r7  @ r4 :: LED_ON
+  mov 	r3,   #0      @ on -> 0, off -> 1
+	ldr		r1,		=count
+	add		r7,		r1,	r7  @ r7 :: count
+	ldr		r1,		=disp
+	add		r1,		r1,	r7
+	push	{r1}
 @ setting loop variable
-	mov	r11,	#0
-	mov	r12,	#0
+	mov		r11,	#0
+	mov		r12,	#0
+	mov		r10,	#0
 loop:
 @ Task: [ Find out if a button is pressed ]
   bl    read_switch @ Overwriten register {r1}
@@ -50,7 +54,7 @@ structStrings:
 	add		r7,	r1,	r7	  @ update target time
   bl    writeProcess  @ Pushed register {r0 - r4, r6, r8}
 
-@ Task: [ LED flashing]
+@ Task: [ LED flashing ]
 LED_Flashing:
   ldr   r8,   =led
   ldr   r0,   =GPIO_BASE
@@ -63,14 +67,28 @@ LED_Flashing:
     strcc r1,   [r0, #GPSET0] @ ON
     addcs r4,   r6, r8
     movcs r3,   #1
-    b     endp
+    b     disp
   off:
     cmp   r6,   r4
     strcc r1,   [r0, #GPCLR0] @ OFF
     addcs r4,   r6, r8
     movcs r3,   #0
+disp:
+	pop		{r1}
+	ldr		r6,		[r9, #GPFSEL1]	@ r6 current
+	cmp		r6,		r1			@	Current, Target
+	bcc		endp					@ Currnet < Target
+	mov		r0,		#disp
+	add		r1,		r0,	r6	@ update target time
+	add		r10,	r10,	#1
+	cmp		r10,	#8
+	moveq	r10,	#0
 endp:
-	bl	  display
+	push	{r4}
+	mov		r4,	r10
+	bl		display_row
+	pop		{r4}
+	push	{r1}
 	b	    loop
 @	----- data base -----
 nb_0:

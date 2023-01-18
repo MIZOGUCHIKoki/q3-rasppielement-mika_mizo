@@ -75,10 +75,8 @@ disp:
 	add		r4,		r4,	#1
 	cmp		r4,		#8
 	moveq	r4,		#0
-
-	bl	display_row
-
 endp:
+	bl	display_row
 	b	loop
 @	----- data base -----
 nb_0:

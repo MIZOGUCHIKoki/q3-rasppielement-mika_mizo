@@ -18,6 +18,7 @@
 	.global 	_start
 _start:
 	mov	sp,		#STACK					@ initalize stack pointer
+	bl	setCM
 	ldr	r1,		=frame_buffer
 	push	{r1}
 	ldr r9,		=TIMER_BASE
@@ -44,7 +45,6 @@ writeFrame_buffer:
 	mov		r2,		#7
 	ldr		r0,		=nb_all
 	ldr		r3,		[r0,	r11,	lsl	#2]					@ r3 = nb_0's address r11 * 4(byte)
-	ldr		r8,		[r0,	r12,	lsl	#2]
 	multi:
 		ldrb	r6,		[r8,	r2]
 		lsl		r6,		#4
@@ -61,10 +61,6 @@ writeFrame_buffer:
 	add		r11,	r11,	#1	
 	cmp		r11,	#10
 	moveq	r11,	#0
-
-	addeq	r12,	r12,	#1
-	cmp		r12,	#10
-	moveq	r12,	#0
 @ Task: [ display ]
 disp:
 	ldr		r6,		[r9, #GPFSEL1]	@ r6 current
@@ -76,9 +72,8 @@ disp:
 	cmp		r4,		#8
 	moveq	r4,		#0
 
-	bl	display_row
-
 endp:
+	bl	display_row
 	b	loop
 @	----- data base -----
 nb_0:
