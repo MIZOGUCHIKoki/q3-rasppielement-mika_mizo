@@ -10,7 +10,7 @@ OBJFLAGS = -O binary
 	$(OBJ) $< $(OBJFLAGS) $@
 	rm *.o *.elf 
 
-jiho.elf: jiho.o display_row.o setCM.o
+jiho.elf: jiho.o display_row.o setCM.o jiho_command.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 music.elf: music.o sound.o
