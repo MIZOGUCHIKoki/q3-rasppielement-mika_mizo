@@ -13,7 +13,7 @@ OBJFLAGS = -O binary
 jiho.elf: jiho.o display_row.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-music.elf: music.o setCM.o
+music.elf: music.o sound.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 fade.elf: fade.o 
