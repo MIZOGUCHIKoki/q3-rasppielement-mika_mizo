@@ -9,7 +9,7 @@ debug_on:
 	push	{r0 - r2, r14}
 	ldr		r0,	=GPIO_BASE
 	mov		r1,	#(1 << 10)
-	ldr		r2,	0xff
+	ldr		r2,	=0xfff
 	str		r1,	[r0, #GPSET0]
 loop:
 	subs	r2,	r2,	#1
