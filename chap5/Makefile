@@ -10,19 +10,19 @@ OBJFLAGS = -O binary
 	$(OBJ) $< $(OBJFLAGS) $@
 	rm *.o *.elf 
 
-jiho.elf: jiho.o display_row.o setCM.o jiho_command.o
+jiho.elf: jiho.o display_row.o settings.o jiho_command.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 music.elf: music.o settings.o 
 	$(LD) $(LDFRAGS) $+ -o $@
 
-fade.elf: fade.o 
+fade.elf: fade.o settings.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 doremi.elf: doremi.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-ra.elf: ra.o setCM.o
+ra.elf: ra.o settings.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 %.elf: %.o 
