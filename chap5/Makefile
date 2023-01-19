@@ -16,7 +16,7 @@ jiho.elf: jiho.o display_row.o settings.o jiho_command.o
 music.elf: music.o sound.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
-fade.elf: fade.o 
+fade.elf: fade.o settings.o
 	$(LD) $(LDFRAGS) $+ -o $@
 
 doremi.elf: doremi.o
