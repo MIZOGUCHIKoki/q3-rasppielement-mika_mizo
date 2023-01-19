@@ -1,7 +1,7 @@
 	.include	"common.s"
 	.section	.text
-	.global		setCM
-setCM:
+	.global		settings
+settings:
 	push	{r0, r1}
 	ldr	r0,	=GPIO_BASE
 	ldr	r1, =GPFSEL_VEC0
