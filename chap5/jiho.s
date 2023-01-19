@@ -9,7 +9,7 @@
 	.global 	_start
 _start:
 	mov		sp,		#STACK					@ initalize stack pointer
-	bl		setCM
+	bl		settings
 	ldr		r1,		=frame_buffer
 	push	{r1}
 	ldr 	r9,		=TIMER_BASE

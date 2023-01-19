@@ -14,7 +14,7 @@ _start:
 	str	r1,	[r0, #GPFSEL0 + 8]
 
 	@set CM
-	bl	setCM
+	bl	settings
 	@set PWM
 	ldr	r0,	=PWM_BASE
 	ldr	r1,	=(1 << PWM_MSEN2 | 1 << PWM_PWEN2)
