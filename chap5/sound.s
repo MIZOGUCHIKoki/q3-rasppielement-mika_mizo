@@ -32,19 +32,19 @@ loop0:
 	strne	r9,	[r12, #PWM_DAT2]
 
 loop1:
+	ldr	r7,	=100000
 	ldr	r11,	[r0, #GPFSEL1]
+	add	r8,	r1,	r7
 	cmp	r1,	r11
+
+	movcc	r7,	#0
+	strcc	r7,	[r12, #PWM_DAT2]
+
+	cmp	r8,	r11
 	bcs	loop1
 
-	mov	r7,	#0
-	str	r7,	[r12, #PWM_DAT2]
-	ldr	r7,	=0xffff
-
-1:	subs	r7,	r7,	#1
-	bne	1b
-
 	add	r6,	r6,	#1
-	cmp	r6,	#14
+	cmp	r6,	#13
 	moveq	r6,	#0
 	b	loop0
 
