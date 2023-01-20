@@ -8,7 +8,12 @@ OBJFLAGS = -O binary
 
 %.img: %.elf
 	$(OBJ) $< $(OBJFLAGS) $@
-	rm *.o *.elf 
+	rm *.o *.elf
+sound.elf: sound.o settings.o
+	$(LD) $(LDFRAGS) $+ -o $@
+
+test.elf: test.o settings.o sound.o debug.o
+	$(LD) $(LDFRAGS) $+ -o $@
 
 jiho.elf: jiho.o display_row.o settings.o jiho_command.o
 	$(LD) $(LDFRAGS) $+ -o $@
