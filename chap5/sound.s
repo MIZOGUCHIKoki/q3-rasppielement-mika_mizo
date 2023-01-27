@@ -38,12 +38,17 @@ ON:
 	cmp	r1,	r11
 	addcc	r1,	r1,	r10
 	strcc	r1,	[r7]
+	ldrcc	r1,	[r7, #4]
 	movcc	r8,	#0
 	strcc	r8,	[r12, #PWM_DAT2]
+
+	cmp	r1,	r11
 	addcc	r6,	r6,	#1
+	addcc	r1,	r1,	r10
+	strcc	r1,	[r7, #4]
 	cmp	r6,	#31
 	moveq	r6,	#0
-	ldrb	r7,	=count
+	ldr	r7,	=count
 	strb	r6,	[r7]
 
 	pop	{r0-r12, r14}
@@ -61,7 +66,7 @@ sound_longData:
 	.word	700000, 230000, 120000, 350000
 
 time:
-	.word 	0x00	
+	.word 	0x00, 0x00
 
 sound2:
 	.byte	2,2,2,1,1,1, 0,1,2,3,2,1, 2,3,4,5,7,5, 4,3,2,1,1,1, 2,2,2,2,0,2, 1
