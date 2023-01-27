@@ -2,7 +2,7 @@
 @------------------------------------
 	.equ			count,	1000000		@ 1sec
 	.equ			dpr,		1000      @ 0.0001sec
-	.equ			sound5,	500000		@ 0.5sec
+	.equ			sound5,	750000		@ 0.5sec
 	.equ			sound1,	100000		@ 0.1sec
 	.include	"common.s"
 	.section 	.init
